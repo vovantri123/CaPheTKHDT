@@ -1,13 +1,35 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GioHang {
     /**
      * Default constructor
      */
+	
+	//  Tự thêm
+	private List<SanPham> danhSachSanPhamTrongGio;
+	
+	private SanPham sanPhamDangThem;
+
     public GioHang() {
+        this.danhSachSanPhamTrongGio = new ArrayList<>();
     }
+    
+    // Getter và Setter cho sanPhamDangThem
+    public SanPham getSanPhamDangThem() {
+        return sanPhamDangThem;
+    }
+
+    public void setSanPhamDangThem(SanPham sanPhamDangThem) {
+        this.sanPhamDangThem = sanPhamDangThem;
+    }
+     
+    
+    //  
+    
+    
     private int id;
     private int soLuong;
 
@@ -22,8 +44,11 @@ public class GioHang {
             thongBao.guiThongBaoKhongDuSanPham();
         }
     }
-    public void luuSanPhamVaoGioHang() {
-        // TODO implement here
+ 
+    public void luuSanPhamVaoGioHang() { // 
+    	if (sanPhamDangThem != null) { //
+            danhSachSanPhamTrongGio.add(sanPhamDangThem);
+        }
     }
     public void hienThiTrangGioHang() {
         List<SanPham> danhSachSanPham = layDanhSachSanPhamTrongGioHang();
@@ -31,10 +56,10 @@ public class GioHang {
             sanPham.layThongTinSanPham();
         }
     } 
-    public List<SanPham> layDanhSachSanPhamTrongGioHang() {
-        // TODO implement here
-        return null;
+    public List<SanPham> layDanhSachSanPhamTrongGioHang() { 
+    	return danhSachSanPhamTrongGio; //
     }  
+    
     public SanPham layThongTinSanPham() {
         // TODO implement here
         return null;

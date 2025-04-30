@@ -47,43 +47,49 @@ public class SanPham {
             }
         }  
     } 
-    public String layTenSanPham() {
-        // TODO implement here
-        return "";
-    }
+
     public void themDanhSachSanPham() {
         // TODO implement here
     }
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getTen() {
-		return ten;
-	}
-	public void setTen(String ten) {
-		this.ten = ten;
-	}
-	public String getMoTa() {
-		return moTa;
-	}
-	public void setMoTa(String moTa) {
-		this.moTa = moTa;
-	}
+    
+    public String layTenSanPham() {
+        return ten;
+    }
+    
+    
+//    Khúc dưới là tự thêm
+    
+    public SanPham(int id, String ten) {
+        this.id = id;
+        this.ten = ten;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+    
 	public float getGia() {
 		return gia;
 	}
 	public void setGia(float gia) {
 		this.gia = gia;
 	}
-	public String getHinhAnh() {
-		return hinhAnh;
-	}
-	public void setHinhAnh(String hinhAnh) {
-		this.hinhAnh = hinhAnh;
-	} 
+    
+     
+   
+
     
     
 }
