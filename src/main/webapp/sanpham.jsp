@@ -159,22 +159,26 @@
     </form>
 </div>
 
-<div class="product-container">
-<%
-    List<SanPham> danhSach = SanPham.getDanhSachSanPham();
-    for (SanPham sp : danhSach) {
-%>
-    <div class="product-card">
-        <img src="<%= sp.getHinhAnh() %>" alt="Đây là ảnh sản phẩm" />
-        <h3><%= sp.getTen() %></h3>
-        <p><strong><%= sp.getGia() %></strong> đ</p>
-        <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
-        <a href="sanpham_form.jsp?id=<%= sp.getId() %>" style="margin-top: 4px">Cập nhật</a>
-    </div>
-<%
-    }
-%>
-</div>
+                <% String tuKhoa=request.getParameter("search"); List<SanPham> danhSachTimKiem =
+                    SanPham.getDanhSachSanPham();
+                    if (tuKhoa != null && !tuKhoa.isEmpty()) {
+                    danhSachTimKiem = SanPham.timKiemSanPham(tuKhoa);
+                    }
+                    %>
+                    <div class="product-container">
+                        <% for (SanPham sp : danhSachTimKiem) { %>
+                            <div class="product-card">
+                                <img src="<%= sp.getHinhAnh() %>" alt="Đây là ảnh sản phẩm" />
+                                <h3>
+                                    <%= sp.getTen() %>
+                                </h3>
+                                <p><strong>
+                                        <%= sp.getGia() %>
+                                    </strong> đ</p>
+                                <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
+                            </div>
+                            <% } %>
+                    </div>
 
 </body>
 </html>

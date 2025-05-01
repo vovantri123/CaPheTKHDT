@@ -129,7 +129,15 @@ public class SanPham {
 	public static void setDanhSachSanPham(List<SanPham> danhSachSanPham) {
 		SanPham.danhSachSanPham = danhSachSanPham;
 	}
-	
+	public static List<SanPham> timKiemSanPham(String tuKhoa) {
+	    List<SanPham> ketQuaTimKiem = new ArrayList<>();
+	    for (SanPham sanPham : danhSachSanPham) {
+	        if (sanPham.getTen().toLowerCase().contains(tuKhoa.toLowerCase())) {
+	            ketQuaTimKiem.add(sanPham);
+	        }
+	    }
+	    return ketQuaTimKiem;
+	}
 	
 	static {
 	    danhSachSanPham.add(new SanPham(1, "Cà phê Đắk Lắk", "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG", 59000f, "Hương vị mạnh mẽ, đậm đà từ vùng đất đỏ bazan Đắk Lắk, nơi nổi tiếng với những vườn cà phê xanh mướt. Sản phẩm mang đến một cảm giác tươi mới, đầy năng lượng, lý tưởng cho những ai yêu thích sự mạnh mẽ và sâu sắc trong mỗi tách cà phê."));
