@@ -1,83 +1,179 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="model.SanPham" %>
-<%@ page import="model.GioHang" %>
-<%
-    // Lấy danh sách sản phẩm mẫu
-    List<SanPham> danhSachSanPham = (List<SanPham>) session.getAttribute("danhSachSanPham");
-    if (danhSachSanPham == null) {
-        danhSachSanPham = new ArrayList<>();
-        SanPham sp1 = new SanPham();
-        sp1.setId(1);
-        sp1.setTen("Cà phê đen");
-        sp1.setGia(20000);
-        danhSachSanPham.add(sp1);
-
-        SanPham sp2 = new SanPham();
-        sp2.setId(2);
-        sp2.setTen("Cà phê sữa");
-        sp2.setGia(25000);
-        danhSachSanPham.add(sp2);
-
-        session.setAttribute("danhSachSanPham", danhSachSanPham);
-    }
-
-    // Xử lý thêm sản phẩm vào giỏ nếu có param id
-    String idParam = request.getParameter("id");
-    if (idParam != null) {
-        int id = Integer.parseInt(idParam);
-        SanPham sanPhamChon = null;
-        for (SanPham sp : danhSachSanPham) {
-            if (sp.getId() == id) {
-                sanPhamChon = sp;
-                break;
-            }
-        }
-
-        if (sanPhamChon != null) {
-            GioHang gioHang = (GioHang) session.getAttribute("gioHang");
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                session.setAttribute("gioHang", gioHang);
-            }
-            gioHang.setSanPhamDangThem(sanPhamChon);
-            gioHang.themSanPhamVaoGioHang();
-        }
-    }
-%>
 
 <html>
 <head>
-    <title>Danh sách sản phẩm</title>
+    <title>Danh sách sản phẩm</title> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap">
+
+    <style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #efebe9;
+        color: #4e342e;
+        line-height: 1.7;
+    
+    }
+
+    .search-bar {
+        margin: 20px auto;
+        text-align: center;
+        max-width: 600px;
+        padding: 0 20px;
+    }
+
+    .search-bar form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-bar input[type="text"] {
+        padding: 8px 12px;
+        width: 100%;
+        max-width: 300px;
+        font-size: 16px;
+        border: 1px solid #a1887f;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+
+    .search-bar button {
+        padding: 8px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #795548;
+        color: white;
+        border: 1px solid #795548;
+        border-radius: 0 5px 5px 0;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .search-bar button:hover {
+        background-color: #6d4c41;
+        border-color: #6d4c41;
+    }
+
+    .product-container {
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: flex-start;
+        padding: 20px;
+        margin-left: 40px; 
+    }
+
+    .product-card {
+        width: 200px;
+        border: 1px solid #d7ccc8;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 280px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        max-width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+        font-family: 'Merriweather', serif;
+        font-size: 16px;
+        margin: 0 0 5px;
+        color: #3e2723;
+        width: 100%;
+        height: 2.2em;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 1.3;
+        text-align: left;
+        padding: 0 5px;
+    }
+
+    .product-card p {
+        margin: 0 0 10px;
+        font-size: 16px;
+        color: #5d4037;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product-card p strong {
+        font-weight: 700;
+    }
+
+     .product-card a {
+        padding: 6px 6px;
+        background-color: #6d4c41;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card a:hover {
+        background-color: #5d4037;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-card a:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+</style>
 </head>
 <body>
-    <h2>🛒 Danh sách sản phẩm</h2>
-    <table border="1">
-        <tr>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Hành động</th>
-        </tr>
-        <%
-            for (SanPham sp : danhSachSanPham) {
-        %>
-        <tr>
-            <td><%= sp.getTen() %></td>
-            <td><%= sp.getGia() %></td>
-            <td>
-                <form method="get" action="sanpham.jsp">
-                    <input type="hidden" name="id" value="<%= sp.getId() %>" />
-                    <input type="submit" value="Thêm vào giỏ hàng" />
-                </form>
-            </td>
-        </tr>
-        <%
-            }
-        %>
-    </table>
-    <br/>
-    <a href="giohang.jsp">Xem giỏ hàng</a>
+
+<jsp:include page="header.jsp"/>
+
+<div class="search-bar">
+    <form action="#" method="get">
+        <input type="text" placeholder="Tìm kiếm sản phẩm..." name="search" />
+        <button type="submit">Tìm kiếm</button>
+    </form>
+</div>
+
+<div class="product-container">
+<%
+    List<SanPham> danhSach = SanPham.getDanhSachSanPham();
+    for (SanPham sp : danhSach) {
+%>
+    <div class="product-card">
+        <img src="<%= sp.getHinhAnh() %>" alt="Đây là ảnh sản phẩm" />
+        <h3><%= sp.getTen() %></h3>
+        <p><strong><%= sp.getGia() %></strong> đ</p>
+        <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
+    </div>
+<%
+    }
+%>
+</div>
+
 </body>
 </html>

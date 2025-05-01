@@ -11,6 +11,6 @@ public class LoaiSanPham {
 
     public boolean kiemTraLoaiSanPham() {
         // TODO implement here
-        return false;
+        return true;
     }
 }
