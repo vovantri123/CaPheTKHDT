@@ -10,6 +10,7 @@
             <li><a href="sanpham_form.jsp">Thêm Sản phẩm</a></li>
             <li><a href="giohang.jsp">Giỏ hàng</a></li>
             <li><a href="xem_don_hang.jsp">Xem đơn hàng</a></li>
+            <li><a href="danhgia.jsp">Đánh giá</a></li>
         </ul>
     </div>
 </nav>
