@@ -19,9 +19,10 @@
     if ("nhan_don".equals(action)) {
         DonHang dh = donHang.nhanDon();
         System.out.println("Đơn hàng ID " + dh.getId() + " đã xử lý");
-    } else if ("huy_don_nv".equals(action)) {
-        donHang.capNhatTrangThaiDaHuy();
     }
+//    else if ("huy_don_nv".equals(action)) {
+//        donHang.capNhatTrangThaiDaHuy();
+//    }
 
     response.sendRedirect("xem_don_hang.jsp");
 %>

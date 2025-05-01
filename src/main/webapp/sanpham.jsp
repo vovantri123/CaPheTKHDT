@@ -176,6 +176,7 @@
                                         <%= sp.getGia() %>
                                     </strong> đ</p>
                                 <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
+                                <a href="sanpham_form.jsp?id=<%= sp.getId() %>" style="margin-top: 4px">Cập nhật</a>
                             </div>
                             <% } %>
                     </div>

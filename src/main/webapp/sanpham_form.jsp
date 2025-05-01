@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.SanPham" %>
+<%@ page import="model.LoaiSanPham" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="model.Kho" %>
 <%
     request.setCharacterEncoding("UTF-8");
     String method = request.getMethod();
@@ -10,6 +12,7 @@
         String idStr = request.getParameter("id");
         String ten = request.getParameter("ten");
         String giaStr = request.getParameter("gia");
+        String soLuongTonKho = request.getParameter("soLuongTonKho");
         String hinhAnh = request.getParameter("hinhAnh");
         String moTa = request.getParameter("moTa");
 
@@ -21,7 +24,7 @@
             spMoi.setTen(ten);
             spMoi.setHinhAnh(hinhAnh);
             spMoi.setMoTa(moTa);
-            spMoi.themSanPham();
+            spMoi.themSanPham(Integer.valueOf(soLuongTonKho));
         } else {
             SanPham spCapNhat = new SanPham();
             spCapNhat.setId(Integer.parseInt(idStr));
@@ -67,11 +70,14 @@
     // --- Đặt tiêu đề và nút bấm dựa trên chế độ ---
     String pageTitle = isUpdateMode ? "Cập Nhật Sản Phẩm" : "Thêm Sản Phẩm Mới";
     String buttonText = isUpdateMode ? "Lưu Thay Đổi" : "Thêm Sản Phẩm";
+    List<LoaiSanPham> loaiSanPhamList = LoaiSanPham.getDanhSachLoaiSanPham();
+    int loaiSanPhamId = 0;
 
     // --- Lấy giá trị cho form (từ sản phẩm cần sửa hoặc để trống) ---
     String tenValue = isUpdateMode ? sanPhamToEdit.getTen() : "";
     // Định dạng lại giá để hiển thị trong input number
     String giaValue = isUpdateMode ? String.format(Locale.US, "%.0f", sanPhamToEdit.getGia()) : "";
+    String soLuongTonKho = isUpdateMode ? String.format(Locale.US, "%d", Kho.timSoLuongTonKho(sanPhamToEdit.getId())) : "0";
     String hinhAnhValue = isUpdateMode ? sanPhamToEdit.getHinhAnh() : "";
     String moTaValue = isUpdateMode ? sanPhamToEdit.getMoTa() : "";
 
@@ -213,13 +219,27 @@
             <label for="tenSanPham">Tên Sản Phẩm:</label>
             <input type="text" id="tenSanPham" name="ten" value="<%= tenValue %>" required placeholder="Nhập tên sản phẩm">
         </div>
-
+            <div class="form-group">
+                <label for="loaiSanPham">Loại Sản Phẩm:</label>
+                <select id="loaiSanPham" name="loaiSanPhamId" required>
+                    <option value="">-- Chọn loại sản phẩm --</option>
+                    <% for (LoaiSanPham lsp : loaiSanPhamList) { %>
+                    <option value="<%= lsp.getId() %>" <%= (lsp.getId() == loaiSanPhamId) ? "selected" : "" %>><%= lsp.getTen() %></option>
+                    <% } %>
+                </select>
+            </div>
         <div class="form-group">
             <label for="giaSanPham">Giá (VNĐ):</label>
             <%-- Sử dụng type="number" để dễ nhập số, step="1" cho số nguyên --%>
             <input type="number" id="giaSanPham" name="gia" value="<%= giaValue %>" required min="0" step="1" placeholder="Nhập giá sản phẩm">
         </div>
-
+        <div class="form-group">
+            <label for="soLuongTonKho">Số lượng tồn kho:</label>
+            <input type="number" id="soLuongTonKho" name="soLuongTonKho"
+                   value="<%= soLuongTonKho %>" required min="0" step="1"
+                   placeholder="Nhập giá sản phẩm"
+                <%= isUpdateMode ? "disabled" : "" %> >
+        </div>
         <div class="form-group">
             <label for="hinhAnhSanPham">URL Hình Ảnh:</label>
             <%-- Sử dụng type="url" hoặc "text" --%>
@@ -233,9 +253,8 @@
 
         <div class="form-actions">
             <button type="submit"><%= buttonText %></button>
-            <a href="danhsachsanpham.jsp" class="back-link">Quay lại danh sách</a> <%-- Link quay lại trang danh sách --%>
+            <a href="sanpham.jsp" class="back-link">Quay lại danh sách</a> <%-- Link quay lại trang danh sách --%>
         </div>
-
     </form>
 </div>
 
