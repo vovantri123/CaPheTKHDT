@@ -56,19 +56,21 @@ public class SanPham {
     		    + "</tr>";
         
     }
-    public void themSanPham() {
-        SanPham newSanPham = new SanPham(danhSachSanPham.get(danhSachSanPham.size() - 1).getId() + 1, ten, hinhAnh, gia, moTa);
-        danhSachSanPham.add(newSanPham);
-        System.out.println("Đã thêm SP: " + newSanPham);
-    }
-    public void luuSanPham() {
+    public void themSanPham(int soLuong) {
         LoaiSanPham loaiSanPham = new LoaiSanPham();
         boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
         if(ketQua == true) {
-            luuThongTinSanPham();
+            SanPham sanPham = luuSanPham();
             Kho kho = new Kho();
-            kho.capNhatKho(id, 1);
+            kho.themKho(sanPham.getId(), soLuong);
         }
+    }
+
+    public SanPham luuSanPham() {
+        SanPham newSanPham = new SanPham(danhSachSanPham.get(danhSachSanPham.size() - 1).getId() + 1, ten, hinhAnh, gia, moTa);
+        danhSachSanPham.add(newSanPham);
+        System.out.println("Đã thêm SP: " + newSanPham);
+        return newSanPham;
     }    
     public void nhapTuKhoaTimKiem(String tuKhoa) {
         List<SanPham> danhSachSanPham = new ArrayList<SanPham>();
