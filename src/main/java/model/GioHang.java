@@ -1,80 +1,60 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 
 public class GioHang {
     /**
      * Default constructor
      */
-	private StringBuilder htmlOutput;
+	private StringBuilder html;
 	
 	private int id;
     private int soLuong;
 	
 	//  Tự thêm
-	private List<SanPham> danhSachSanPhamTrongGio; 
+	public static List<SanPham> danhSachSanPhamTrongGioHang = new ArrayList<>();; 
 
     public GioHang() {
-    	htmlOutput = new StringBuilder();	
-        this.danhSachSanPhamTrongGio = new ArrayList<>();
+    	html = new StringBuilder();	 
     } 
-    
- // Getter lấy chuỗi HTML đã tạo
-    public String getHtmlOutput() {
-        return htmlOutput.toString();
-    }
      
+    
     public void hienThiTrangGioHang() {
-        htmlOutput.setLength(0); // Xóa nội dung cũ trong htmlOutput trước khi tạo lại
+    	html.setLength(0); // Xóa nội dung cũ trong htmlOutput trước khi tạo lại
 
         List<SanPham> danhSachSanPham = layDanhSachSanPhamTrongGioHang();
 
-        if (!danhSachSanPham.isEmpty()) {
-            for (SanPham sanPham : danhSachSanPham) {
-                htmlOutput.append("<tr>");
-                htmlOutput.append("<td><img src='" + sanPham.getHinhAnh() + "' alt='" + sanPham.getTen() + "' /></td>");
-                htmlOutput.append("<td>" + sanPham.getTen() + "</td>");
-                htmlOutput.append("<td>" + sanPham.getGia() + " VND</td>");
-                htmlOutput.append("</tr>");
-            }
-        } else {
-            htmlOutput.append("<tr class='empty-cart-row'><td colspan='3'>Giỏ hàng của bạn hiện tại chưa có sản phẩm nào.</td></tr>");
+        String giaoDien = "";
+        for (SanPham sanPham : danhSachSanPham) {
+        	giaoDien += SanPham.layThongTinSanPham(sanPham); 
         }
+        
+        html.append(giaoDien);
     }
 
 
-    public void themSanPhamVaoGioHang() {
-        Kho kho = new Kho();
-        ThongBao thongBao = new ThongBao();
-        
-        boolean ketQua = kho.kiemTraTonKho();
-        
-        if(ketQua == true) {
-            luuSanPhamVaoGioHang();
-            thongBao.guiThongBao();
-        } else {
-            thongBao.guiThongBaoKhongDuSanPham();
-        }
+    public void themSanPhamVaoGioHang() {  
+    	SanPham sanPham = new SanPham().laySanPhamDeThemVaoGioHang(id); 
+    	
+    	if(sanPham != null) { 
+            luuSanPhamVaoGioHang(sanPham);  
+    	}        
     } 
 
-    public void luuSanPhamVaoGioHang() {
-        for (SanPham sp : SanPham.getDanhSachSanPham()) {
-            if (sp.getId() == this.id) {
-                for (int i = 0; i < this.soLuong; i++) {
-                    danhSachSanPhamTrongGio.add(sp);
-                } 
-            }
-        } 
-    }  
+    public void luuSanPhamVaoGioHang(SanPham sanPham) {  
+    	danhSachSanPhamTrongGioHang.addAll(Collections.nCopies(soLuong, sanPham)); 
+    }   
     
+    public boolean GiauLy() {
+    	return false;
+    }
     
     
     public List<SanPham> layDanhSachSanPhamTrongGioHang() { 
-    	return danhSachSanPhamTrongGio; //
+    	return danhSachSanPhamTrongGioHang; //
     }  
     
     public SanPham layThongTinSanPham() {
@@ -104,14 +84,26 @@ public class GioHang {
 	}
 
 
-	public List<SanPham> getDanhSachSanPhamTrongGio() {
-		return danhSachSanPhamTrongGio;
+	public static List<SanPham> getDanhSachSanPhamTrongGio() {
+		return danhSachSanPhamTrongGioHang;
+	}
+
+	public static void setDanhSachSanPhamTrongGio(List<SanPham> danhSachSanPhamTrongGio) {
+		GioHang.danhSachSanPhamTrongGioHang = danhSachSanPhamTrongGio;
+	}
+	
+
+	public StringBuilder getHtml() {
+		return html;
 	}
 
 
-	public void setDanhSachSanPhamTrongGio(List<SanPham> danhSachSanPhamTrongGio) {
-		this.danhSachSanPhamTrongGio = danhSachSanPhamTrongGio;
+	public void setHtml(StringBuilder html) {
+		this.html = html;
 	}
-    
+
+
+
+	
     
 }

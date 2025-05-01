@@ -144,7 +144,7 @@
             </tr>
         </thead>
         <tbody>
-            <%= gioHang.getHtmlOutput() %>  <!-- Gọi hàm getHtmlOutput() để lấy HTML giỏ hàng -->
+            <%= gioHang.getHtml() %>  <!-- Gọi hàm getHtmlOutput() để lấy HTML giỏ hàng -->
         </tbody>
     </table>
 </div>

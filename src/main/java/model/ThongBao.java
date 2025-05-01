@@ -41,8 +41,11 @@ public class ThongBao {
     private String nguoiNhan;
 
 
-
-    public void guiThongBaoKhongDuSanPham() { 
-    	System.out.println("Sản phẩm không đủ");
-    }
+   public void guiThongBaoThanhCong() {
+	   System.out.println("Đây là thông báo thành công");
+   }	
+   
+	public void guiThongBaoKhongDuSanPham() { 
+		System.out.println("Sản phẩm không đủ");
+	}
 }
