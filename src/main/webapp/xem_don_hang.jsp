@@ -3,6 +3,8 @@
 <%@ page import="model.DonHang" %>
 <%@ page import="model.ChiTietDonHang" %> <%-- Import inner class đúng cách --%>
 <%@ page import="java.net.URLDecoder" %>
+<%@ page import="model.DanhGia" %>
+<%@ page import="java.time.LocalDateTime" %>
 <jsp:include page="header.jsp"/>
 
 <%
@@ -14,6 +16,30 @@
         if (request.getParameter("success") != null) {
             messageType = "success";
         } else if (request.getParameter("error") != null) {
+            messageType = "error";
+        }
+    }
+
+    // Xử lý đánh giá nếu form được submit
+    if (request.getMethod().equalsIgnoreCase("POST")) {
+        String orderId = request.getParameter("orderId");
+        String soSaoStr = request.getParameter("soSao");
+        String binhLuan = request.getParameter("binhLuan");
+
+        if (orderId != null && soSaoStr != null && binhLuan != null) {
+            int soSao = Integer.parseInt(soSaoStr);
+            DanhGia danhGia = new DanhGia(soSao, binhLuan, LocalDateTime.now());
+
+            if (danhGia.kiemTraKetQua()) {
+                // Giả sử lưu đánh giá thành công
+                message = "Đơn hàng #" + orderId + " đã đánh giá thành công!";
+                messageType = "success";
+            } else {
+                message = "Đánh giá không hợp lệ!";
+                messageType = "error";
+            }
+        } else {
+            message = "Dữ liệu đánh giá không đầy đủ!";
             messageType = "error";
         }
     }
@@ -142,6 +168,18 @@
         td strong { font-weight: 600; } /* Làm nổi bật trạng thái */
 
     </style>
+    <script>
+        function openRatingModal(orderId) {
+            document.getElementById('ratingOrderId').value = orderId;
+            document.getElementById('ratingModal').style.display = 'block';
+            document.getElementById('modalOverlay').style.display = 'block';
+        }
+
+        function closeRatingModal() {
+            document.getElementById('ratingModal').style.display = 'none';
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+    </script>
 </head>
 <body>
 
@@ -207,11 +245,7 @@
             </form>
             <% } else if (dh.getTrangThai().equals(DonHang.DANG_THUC_HIEN)) { %>
             <%-- Đơn hàng đang thực hiện: Hiển thị nút Hoàn thành và Hủy --%>
-            <form action="xu_ly_don_hang.jsp" method="post" style="display: inline;">
-                <input type="hidden" name="orderId" value="<%= dh.getId() %>">
-                <input type="hidden" name="action" value="hoan_thanh">
-                <button type="submit" class="action-button btn-complete">Hoàn Thành</button>
-            </form>
+            <button type="button" class="action-button btn-complete" onclick="openRatingModal('<%= dh.getId() %>')">Hoàn Thành</button>
             <form action="xu_ly_don_hang.jsp" method="post" style="display: inline;">
                 <input type="hidden" name="orderId" value="<%= dh.getId() %>">
                 <input type="hidden" name="action" value="huy_don_nv">
@@ -228,5 +262,39 @@
 </table>
 <% } %>
 
+<!-- Modal form đánh giá -->
+<div id="ratingModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000;">
+    <h3>Đánh Giá Đơn Hàng</h3>
+    <form id="ratingForm" action="xem_don_hang.jsp" method="post">
+        <input type="hidden" name="orderId" id="ratingOrderId">
+        <label for="soSao">Số Sao:</label>
+        <select name="soSao" id="soSao" required>
+            <option value="5">5 - Tuyệt vời</option>
+            <option value="4">4 - Tốt</option>
+            <option value="3">3 - Bình thường</option>
+            <option value="2">2 - Kém</option>
+            <option value="1">1 - Rất tệ</option>
+        </select>
+        <br><br>
+        <label for="binhLuan">Bình Luận:</label>
+        <textarea name="binhLuan" id="binhLuan" rows="4" style="width: 100%;" required></textarea>
+        <br><br>
+        <button type="submit" class="action-button btn-complete">Gửi Đánh Giá</button>
+        <button type="button" class="action-button btn-cancel" onclick="closeRatingModal()">Hủy</button>
+    </form>
+</div>
+<div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;" onclick="closeRatingModal()"></div>
+<script>
+    function openRatingModal(orderId) {
+        document.getElementById('ratingOrderId').value = orderId;
+        document.getElementById('ratingModal').style.display = 'block';
+        document.getElementById('modalOverlay').style.display = 'block';
+    }
+
+    function closeRatingModal() {
+        document.getElementById('ratingModal').style.display = 'none';
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+</script>
 </body>
 </html>
