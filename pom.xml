@@ -10,12 +10,21 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>22</release>
+          <release>17</release>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
+      </plugin>
+      <plugin>
+        <groupId>org.opoo.maven</groupId>
+        <artifactId>tomcat9-maven-plugin</artifactId>
+        <version>3.0.1</version>
+        <configuration>
+          <port>8080</port>
+          <path>/</path>
+        </configuration>
       </plugin>
     </plugins>
   </build>

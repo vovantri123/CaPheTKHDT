@@ -77,7 +77,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 280px;
+        height: 290px;
         transition: transform 0.3s, box-shadow 0.3s;
     }
 
@@ -169,6 +169,7 @@
         <h3><%= sp.getTen() %></h3>
         <p><strong><%= sp.getGia() %></strong> đ</p>
         <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
+        <a href="sanpham_form.jsp?id=<%= sp.getId() %>" style="margin-top: 4px">Cập nhật</a>
     </div>
 <%
     }

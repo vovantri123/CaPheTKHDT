@@ -7,6 +7,7 @@
         </div>
         <ul>
             <li><a href="sanpham.jsp">Sản phẩm</a></li>
+            <li><a href="sanpham_form.jsp">Thêm Sản phẩm</a></li>
             <li><a href="giohang.jsp">Giỏ hàng</a></li>
         </ul>
     </div>

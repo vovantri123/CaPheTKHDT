@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class SanPham {
@@ -25,11 +26,24 @@ public class SanPham {
     private float gia;
     private String hinhAnh;
     public void capNhatSanPham() {
-        LoaiSanPham loaiSanPham = new LoaiSanPham();
-        boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
-        if(ketQua == true) {
-            luuThongTinSanPham();
+        Optional<SanPham> sanPhamCapNhat = danhSachSanPham.stream()
+                .filter(sp -> sp.getId() == id)
+                .findFirst();
+        if (sanPhamCapNhat.isPresent()) {
+            SanPham existingSanPham = sanPhamCapNhat.get();
+            existingSanPham.setTen(ten);
+            existingSanPham.setHinhAnh(hinhAnh);
+            existingSanPham.setGia(gia);
+            existingSanPham.setMoTa(moTa);
+            System.out.println("Đã cập nhật SP ID " + id + ": " + existingSanPham);
+        } else {
+            System.out.println("Không tìm thấy SP với ID " + id + " để cập nhật.");
         }
+//        LoaiSanPham loaiSanPham = new LoaiSanPham();
+//        boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
+//        if(ketQua == true) {
+//            luuThongTinSanPham();
+//        }
     }
     public void luuThongTinSanPham() {
         // TODO implement here
@@ -38,7 +52,9 @@ public class SanPham {
         // TODO implement here
     }
     public void themSanPham() {
-        // TODO implement here
+        SanPham newSanPham = new SanPham(danhSachSanPham.get(danhSachSanPham.size() - 1).getId() + 1, ten, hinhAnh, gia, moTa);
+        danhSachSanPham.add(newSanPham);
+        System.out.println("Đã thêm SP: " + newSanPham);
     }
     public void luuSanPham() {
         LoaiSanPham loaiSanPham = new LoaiSanPham();
@@ -136,11 +152,4 @@ public class SanPham {
 	    danhSachSanPham.add(new SanPham(17, "Cà phê Macchiato", "https://www.shutterstock.com/image-vector/coming-soon-speechbubble-advertising-megaphone-600nw-2511768889.jpg", 65000f, "Cà phê Macchiato là sự kết hợp giữa cà phê Espresso đậm đặc và một lớp bọt sữa nhẹ, mang đến hương vị đậm đà nhưng không quá mạnh mẽ."));
 	    danhSachSanPham.add(new SanPham(18, "Cà phê Flat White", "https://www.shutterstock.com/image-vector/coming-soon-speechbubble-advertising-megaphone-600nw-2511768889.jpg", 70000f, "Cà phê Flat White là sự kết hợp giữa cà phê Espresso và sữa hơi nở, mang đến một hương vị mượt mà, cân bằng giữa cà phê và sữa."));
 	}
-
-    
-     
-   
-
-    
-    
 }
