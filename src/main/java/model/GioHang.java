@@ -46,7 +46,6 @@ public class GioHang {
         }
     }
 
-    
 
     public void themSanPhamVaoGioHang() {
         Kho kho = new Kho();

@@ -10,7 +10,6 @@ public class Kho {
     private int soLuongTonKho;    
 
     public boolean kiemTraTonKho() {
-        // TODO implement here
         return true;
     }
     public void capNhatKho(int id, int soLuong) {

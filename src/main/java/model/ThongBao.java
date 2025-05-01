@@ -11,12 +11,36 @@ public class ThongBao {
 
     private int id;
     private String noiDung;
-    private LocalDateTime thoiGianGui;
+    public void guiThongBao() {
+        System.out.println("Thông báo gửi đến " + nguoiNhan + ": " + noiDung);
+    }
+    public String getNguoiNhan() {
+        return nguoiNhan;
+    }
+
+    public void setNguoiNhan(String nguoiNhan) {
+        this.nguoiNhan = nguoiNhan;
+    }
+
+    public String getNoiDung() {
+        return noiDung;
+    }
+
+    public void setNoiDung(String noiDung) {
+        this.noiDung = noiDung;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String nguoiNhan;
 
-    public void guiThongBao() { 
-    	System.out.println("Đây là thông báo");
-    }
+
 
     public void guiThongBaoKhongDuSanPham() { 
     	System.out.println("Sản phẩm không đủ");
