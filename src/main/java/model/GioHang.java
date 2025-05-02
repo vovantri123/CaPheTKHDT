@@ -47,12 +47,7 @@ public class GioHang {
     public void luuSanPhamVaoGioHang(SanPham sanPham) {  
     	danhSachSanPhamTrongGioHang.addAll(Collections.nCopies(soLuong, sanPham)); 
     }   
-    
-    public boolean GiauLy() {
-    	return false;
-    }
-    
-    
+        
     public List<SanPham> layDanhSachSanPhamTrongGioHang() { 
     	return danhSachSanPhamTrongGioHang; //
     }  

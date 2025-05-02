@@ -61,6 +61,7 @@
             background-color: #f9f9f9;
             color: #333;
             line-height: 1.6;
+            margin:0;
         }
         h1 {
             font-family: 'Merriweather', serif;
@@ -69,11 +70,13 @@
             margin-bottom: 30px;
         }
         .order-table {
-            width: 100%;
+            width: 95%;
             border-collapse: collapse;
             margin-bottom: 30px;
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            margin-left:auto;
+            margin-right:auto;
         }
         .order-table th, .order-table td {
             border: 1px solid #ddd;
