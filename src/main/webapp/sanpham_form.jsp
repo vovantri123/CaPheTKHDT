@@ -24,7 +24,8 @@
             spMoi.setTen(ten);
             spMoi.setHinhAnh(hinhAnh);
             spMoi.setMoTa(moTa);
-            spMoi.themSanPham(Integer.valueOf(soLuongTonKho));
+            String thongBao = spMoi.themSanPham(Integer.valueOf(soLuongTonKho));
+            System.out.println("Kết quả thêm sản phẩm: " + thongBao);
         } else {
             SanPham spCapNhat = new SanPham();
             spCapNhat.setId(Integer.parseInt(idStr));
@@ -32,7 +33,8 @@
             spCapNhat.setTen(ten);
             spCapNhat.setHinhAnh(hinhAnh);
             spCapNhat.setMoTa(moTa);
-            spCapNhat.capNhatSanPham();
+            String thongBao = spCapNhat.capNhatSanPham();
+            System.out.println("Kết quả cập nhật sản phẩm: " + thongBao);
         }
 
         // Sau khi xử lý xong, chuyển hướng về trang danh sách

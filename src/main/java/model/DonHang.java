@@ -37,24 +37,24 @@ public class DonHang {
         this.chiTietDonHangList = chiTietItems;
     }
 
-    public void xuLyDon() {
-        Kho kho = new Kho();
-        boolean ketQua = kho.kiemTraTonKho();
-        ThongBao thongBao = new ThongBao();
-        List<ChiTietDonHang> chiTietSP = new ArrayList<ChiTietDonHang>();
-        if(ketQua == false) {
-            capNhatTrangThaiDaHuy();
-            thongBao.guiThongBao();
-        } else {
-            capNhatTrangThaiDangThucHien();
-            for(ChiTietDonHang chiTiet : chiTietSP){
-                chiTiet.khauTruKho();
-            }
-            thongBao.guiThongBao();
-        }
-    }
+//    public void xuLyDon() {
+//        Kho kho = new Kho();
+//        boolean ketQua = kho.kiemTraTonKho();
+//        ThongBao thongBao = new ThongBao();
+//        List<ChiTietDonHang> chiTietSP = new ArrayList<ChiTietDonHang>();
+//        if(ketQua == false) {
+//            capNhatTrangThaiDaHuy();
+//            thongBao.guiThongBao();
+//        } else {
+//            capNhatTrangThaiDangThucHien();
+//            for(ChiTietDonHang chiTiet : chiTietSP){
+//                chiTiet.khauTruKho();
+//            }
+//            thongBao.guiThongBao();
+//        }
+//    }
 
-    public DonHang nhanDon() {
+    public DonHang xuLyDon() {
         System.out.println("Bắt đầu xử lý đơn cho ID: " + this.id);
         Kho kho = new Kho();
         boolean ketQua = kho.kiemTraTonKho();
@@ -66,14 +66,17 @@ public class DonHang {
 
             capNhatTrangThaiDaHuy();
         } else {
-            this.trangThai = DANG_THUC_HIEN;
-            thongBao.setNguoiNhan("Khách hàng");
-            thongBao.setNoiDung("Đơn hàng #" + this.id + " của bạn đang được thực hiện.");
-            thongBao.guiThongBao();
+            if(this.trangThai == DA_HOAN_THANH) {
+                System.out.println("Đã có nhân viên khác nhận đơn hàng ID: #" + this.id);
+            }
             System.out.println("Thực hiện khấu trừ kho cho đơn hàng ID: " + this.id);
             for (ChiTietDonHang chiTiet : this.chiTietDonHangList) {
                 chiTiet.khauTruKho();
             }
+            this.trangThai = DA_HOAN_THANH;
+            thongBao.setNguoiNhan("Khách hàng");
+            thongBao.setNoiDung("Đơn hàng #" + this.id + " của bạn đang được thực hiện.");
+            thongBao.guiThongBao();
         }
         return this;
     }

@@ -25,28 +25,28 @@ public class SanPham {
     private String moTa;
     private float gia;
     private String hinhAnh;
-    public void capNhatSanPham() {
-        Optional<SanPham> sanPhamCapNhat = danhSachSanPham.stream()
-                .filter(sp -> sp.getId() == id)
-                .findFirst();
-        if (sanPhamCapNhat.isPresent()) {
-            SanPham existingSanPham = sanPhamCapNhat.get();
-            existingSanPham.setTen(ten);
-            existingSanPham.setHinhAnh(hinhAnh);
-            existingSanPham.setGia(gia);
-            existingSanPham.setMoTa(moTa);
-            System.out.println("Đã cập nhật SP ID " + id + ": " + existingSanPham);
-        } else {
-            System.out.println("Không tìm thấy SP với ID " + id + " để cập nhật.");
-        }
-//        LoaiSanPham loaiSanPham = new LoaiSanPham();
-//        boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
-//        if(ketQua == true) {
-//            luuThongTinSanPham();
-//        }
+    public String capNhatSanPham() {
+
+		LoaiSanPham loaiSanPham = new LoaiSanPham();
+		boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
+		if(ketQua == true) {
+			luuThongTinSanPham();
+			return "Cập nhật sản phẩm thành công!";
+		}
+		return "Lỗi khi cập nhật sản phẩm!";
     }
     public void luuThongTinSanPham() {
-        // TODO implement here
+		Optional<SanPham> sanPhamCapNhat = danhSachSanPham.stream()
+				.filter(sp -> sp.getId() == id)
+				.findFirst();
+		if (sanPhamCapNhat.isPresent()) {
+			SanPham existingSanPham = sanPhamCapNhat.get();
+			existingSanPham.setTen(ten);
+			existingSanPham.setHinhAnh(hinhAnh);
+			existingSanPham.setGia(gia);
+			existingSanPham.setMoTa(moTa);
+			System.out.println("Đã cập nhật SP ID " + id + ": " + existingSanPham);
+		}
     }
     public static String layThongTinSanPham(SanPham sanPham) {
     	return "<tr>"
@@ -56,14 +56,16 @@ public class SanPham {
     		    + "</tr>";
         
     }
-    public void themSanPham(int soLuong) {
+    public String themSanPham(int soLuong) {
         LoaiSanPham loaiSanPham = new LoaiSanPham();
         boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
         if(ketQua == true) {
             SanPham sanPham = luuSanPham();
             Kho kho = new Kho();
             kho.themKho(sanPham.getId(), soLuong);
+			return "Thêm sản phẩm thành công!";
         }
+		return "Lỗi khi thêm sản phẩm!";
     }
 
     public SanPham luuSanPham() {
