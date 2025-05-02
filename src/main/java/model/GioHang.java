@@ -36,9 +36,10 @@ public class GioHang {
     }
 
 
-    public void themSanPhamVaoGioHang() {  
+    public String themSanPhamVaoGioHang() {
     	SanPham sanPham = new SanPham();
 		sanPham.laySanPhamDeThemVaoGioHang(id, soLuong);
+		return "ThemSanPhamThanhCong";
     } 
 
     public void luuSanPhamVaoGioHang(SanPham sanPham, int soLuong) {

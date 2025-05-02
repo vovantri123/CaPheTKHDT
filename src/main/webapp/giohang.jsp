@@ -16,7 +16,8 @@
 
         gioHang.setId(id);
         gioHang.setSoLuong(soLuong);
-        gioHang.themSanPhamVaoGioHang();
+        String thongBao = gioHang.themSanPhamVaoGioHang();
+        System.out.println("Kết quả thêm sản phẩm và giỏ hàng: " + thongBao);
     }
 
     gioHang.hienThiTrangGioHang(); // tạo HTML từ sản phẩm trong giỏ
