@@ -50,7 +50,7 @@ public class SanPham {
     }
     public static String layThongTinSanPham(SanPham sanPham) {
     	return "<tr>"
-    		    + "<td><img src='" + sanPham.getHinhAnh() + "' alt='" + sanPham.getTen() + "' /></td>"
+    		    + "<td><img src='" + sanPham.getHinhAnh() + "' alt='Đây là ảnh sản phẩm' /></td>"
     		    + "<td>" + sanPham.getTen() + "</td>"
     		    + "<td>" + sanPham.getGia() + " VND</td>"
     		    + "</tr>";
@@ -146,26 +146,25 @@ public class SanPham {
 	    return ketQuaTimKiem;
 	}
 	
-	public SanPham laySanPhamDeThemVaoGioHang(int id) {
+	public void laySanPhamDeThemVaoGioHang(int id, int soLuong) {
 		Kho kho = new Kho();
+		GioHang gioHang = new GioHang();
+
 		SanPham sanPham = laySanPhamTheoId(id);
-		
+
 		if(sanPham != null) {
 			boolean ketQua = kho.kiemTraTonKho();
-			if(ketQua == true) { 
-				return sanPham;
+			if(ketQua == true) {
+				gioHang.luuSanPhamVaoGioHang(sanPham, soLuong);
 		    }
-		} 
-	    return null;
+		}
 	}
-	
-	public SanPham laySanPhamTheoId(int id) {
-		for (SanPham sanPham : danhSachSanPham) {
-	        if (sanPham.getId() == id) {
-	            return sanPham;
-	        }
-	    }
-		return null;
+
+	public SanPham laySanPhamTheoId(int id) { // sử dụng Stream API của Java
+		return danhSachSanPham.stream()
+				.filter(sp -> sp.getId() == id)
+				.findFirst()
+				.orElse(null);
 	}
 	
 	static {

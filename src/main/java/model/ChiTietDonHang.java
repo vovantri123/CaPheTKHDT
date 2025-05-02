@@ -39,6 +39,7 @@ public class ChiTietDonHang {
     public void setSanPhamId(int sanPhamId) {
         this.sanPhamId = sanPhamId;
     }
+
     @Override
     public String toString() {
         return "(ID: " + sanPhamId + ", số lượng: " + soLuong + ") - " + String.format("%.0f", thanhTien) + "đ";

@@ -37,14 +37,11 @@ public class GioHang {
 
 
     public void themSanPhamVaoGioHang() {  
-    	SanPham sanPham = new SanPham().laySanPhamDeThemVaoGioHang(id); 
-    	
-    	if(sanPham != null) { 
-            luuSanPhamVaoGioHang(sanPham);  
-    	}        
+    	SanPham sanPham = new SanPham();
+		sanPham.laySanPhamDeThemVaoGioHang(id, soLuong);
     } 
 
-    public void luuSanPhamVaoGioHang(SanPham sanPham) {  
+    public void luuSanPhamVaoGioHang(SanPham sanPham, int soLuong) {
     	danhSachSanPhamTrongGioHang.addAll(Collections.nCopies(soLuong, sanPham)); 
     }   
         
