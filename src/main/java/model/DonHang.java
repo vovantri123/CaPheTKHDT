@@ -9,7 +9,6 @@ public class DonHang {
     }
     // --- Trạng thái đơn hàng ---
     public static final String CHO_XU_LY = "Chờ xử lý";
-    public static final String DANG_THUC_HIEN = "Đang thực hiện";
     public static final String DA_HOAN_THANH = "Đã hoàn thành";
     public static final String DA_HUY = "Đã hủy";
     // --- Thuộc tính của đơn hàng ---
@@ -39,7 +38,6 @@ public class DonHang {
 
     public DonHang xuLyDon() {
         Kho kho = new Kho();
-
         boolean ketQua = kho.kiemTraTonKho();
         if (!ketQua) {
             capNhatTrangThaiDaHuy();

@@ -246,14 +246,9 @@
                 <input type="hidden" name="action" value="huy_don_nv"> <%-- Action riêng cho nhân viên hủy --%>
                 <button type="submit" class="action-button btn-cancel" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng #<%= dh.getId() %> không?');">Hủy Đơn</button>
             </form>
-            <% } else if (dh.getTrangThai().equals(DonHang.DANG_THUC_HIEN)) { %>
+            <% } else if (dh.getTrangThai().equals(DonHang.DA_HOAN_THANH)) { %>
             <%-- Đơn hàng đang thực hiện: Hiển thị nút Hoàn thành và Hủy --%>
-            <button type="button" class="action-button btn-complete" onclick="openRatingModal('<%= dh.getId() %>')">Hoàn Thành</button>
-            <form action="xu_ly_don_hang.jsp" method="post" style="display: inline;">
-                <input type="hidden" name="orderId" value="<%= dh.getId() %>">
-                <input type="hidden" name="action" value="huy_don_nv">
-                <button type="submit" class="action-button btn-cancel" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng #<%= dh.getId() %> đang thực hiện không?');">Hủy Đơn</button>
-            </form>
+            <button type="button" class="action-button btn-complete" onclick="openRatingModal('<%= dh.getId() %>')">Đánh giá</button>
             <% } else { %>
             <%-- Đơn hàng đã Hoàn thành hoặc Đã hủy: Không có hành động --%>
             <span>---</span>
