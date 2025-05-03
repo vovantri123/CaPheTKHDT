@@ -149,37 +149,40 @@
 </style>
 </head>
 <body>
+    <jsp:include page="header.jsp" />
 
-<jsp:include page="header.jsp"/>
+    <div class="search-bar">
+        <form action="#" method="get">
+            <input type="text" placeholder="Tìm kiếm sản phẩm..." name="search" />
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
 
-<div class="search-bar">
-    <form action="#" method="get">
-        <input type="text" placeholder="Tìm kiếm sản phẩm..." name="search" />
-        <button type="submit">Tìm kiếm</button>
-    </form>
-</div>
+    <%
+        String tuKhoa = request.getParameter("search");
+        List<SanPham> danhSachTimKiem = SanPham.getDanhSachSanPham();
+        SanPham sanPham = new SanPham();
+        String thongBao = "";
+        if (tuKhoa != null && !tuKhoa.isEmpty()) {
+            thongBao = sanPham.timKiemSanPham(tuKhoa.trim());
+            danhSachTimKiem = sanPham.getKetQuaTimKiem();
+        }
+        System.out.println("Ket qua tim kiem: "+thongBao);
 
-                <% String tuKhoa=request.getParameter("search"); List<SanPham> danhSachTimKiem =
-                    SanPham.getDanhSachSanPham();
-                    if (tuKhoa != null && !tuKhoa.isEmpty()) {
-                    danhSachTimKiem = SanPham.timKiemSanPham(tuKhoa);
-                    }
-                    %>
-                    <div class="product-container">
-                        <% for (SanPham sp : danhSachTimKiem) { %>
-                            <div class="product-card">
-                                <img src="<%= sp.getHinhAnh() %>" alt="Đây là ảnh sản phẩm" />
-                                <h3>
-                                    <%= sp.getTen() %>
-                                </h3>
-                                <p><strong>
-                                        <%= sp.getGia() %>
-                                    </strong> đ</p>
-                                <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
-                                <a href="sanpham_form.jsp?id=<%= sp.getId() %>" style="margin-top: 4px">Cập nhật</a>
-                            </div>
-                            <% } %>
-                    </div>
 
+
+    %>
+
+    <div class="product-container">
+        <% for (SanPham sp : danhSachTimKiem) { %>
+        <div class="product-card">
+            <img src="<%= sp.getHinhAnh() %>" alt="Đây là ảnh sản phẩm" />
+            <h3><%= sp.getTen() %></h3>
+            <p><strong><%= sp.getGia() %></strong> đ</p>
+            <a href="chitietsanpham.jsp?id=<%= sp.getId() %>">Xem chi tiết</a>
+            <a href="sanpham_form.jsp?id=<%= sp.getId() %>" style="margin-top: 4px">Cập nhật</a>
+        </div>
+        <% } %>
+    </div>
 </body>
 </html>

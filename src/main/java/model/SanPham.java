@@ -8,6 +8,7 @@ import java.util.Optional;
 public class SanPham {
 	
 	private static List<SanPham> danhSachSanPham = new ArrayList<>();
+	private List<SanPham> ketQuaTimKiem = new ArrayList<>();
 	 
     public SanPham() {
     }
@@ -26,7 +27,6 @@ public class SanPham {
     private float gia;
     private String hinhAnh;
     public String capNhatSanPham() {
-
 		LoaiSanPham loaiSanPham = new LoaiSanPham();
 		boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
 		if(ketQua == true) {
@@ -74,44 +74,29 @@ public class SanPham {
         System.out.println("Đã thêm SP: " + newSanPham);
         return newSanPham;
     }    
-    public void nhapTuKhoaTimKiem(String tuKhoa) {
-        List<SanPham> danhSachSanPham = new ArrayList<SanPham>();
-        String tenSanPham;
-        for(SanPham sanPham : danhSachSanPham) {   
-            tenSanPham = sanPham.layTenSanPham();
-            if(tenSanPham == tuKhoa) {
-                themDanhSachSanPham();
-            }
-        }  
-    } 
 
-    public void themDanhSachSanPham() {
-        // TODO implement here
-    }
-    
-    public String layTenSanPham() { // Hàm này giống getter bên dưới
-        return ten;
-    }
-    
-    
-//    
-     
+
+
+
+	public String layTenSanPham() { // Hàm này giống getter bên dưới
+		return ten;
+	} // Getter 2 (đổi tên cho khớp SD thôi)
+	public String getTen() {
+		return ten;
+	}
+
+	public void setTen(String ten) {
+		this.ten = ten;
+	}
+
     public int getId() {
         return id;
     } 
 
     public void setId(int id) {
         this.id = id;
-    } 
-    
-    public String getTen() {
-		return ten;
-	}
-
-	public void setTen(String ten) {
-        this.ten = ten;
     }
-    
+
 	public float getGia() {
 		return gia;
 	}
@@ -138,14 +123,29 @@ public class SanPham {
 	public static void setDanhSachSanPham(List<SanPham> danhSachSanPham) {
 		SanPham.danhSachSanPham = danhSachSanPham;
 	}
-	public static List<SanPham> timKiemSanPham(String tuKhoa) {
-	    List<SanPham> ketQuaTimKiem = new ArrayList<>();
+
+	public List<SanPham> getKetQuaTimKiem() {
+		return ketQuaTimKiem;
+	}
+
+	public void setKetQuaTimKiem(List<SanPham> ketQuaTimKiem) {
+		this.ketQuaTimKiem = ketQuaTimKiem;
+	}
+
+	public String timKiemSanPham(String tuKhoa) {
+		String tenSanPham = "";
+
 	    for (SanPham sanPham : danhSachSanPham) {
-	        if (sanPham.getTen().toLowerCase().contains(tuKhoa.toLowerCase())) {
-	            ketQuaTimKiem.add(sanPham);
+			tenSanPham = sanPham.layTenSanPham();
+	        if (tenSanPham.toLowerCase().contains(tuKhoa.toLowerCase())) {
+				themDanhSachSanPham(sanPham);
 	        }
 	    }
-	    return ketQuaTimKiem;
+		return "HienThiSanPhamThanhCong";
+	}
+
+	public void themDanhSachSanPham(SanPham sanPham) {
+		ketQuaTimKiem.add(sanPham);
 	}
 	
 	public void laySanPhamDeThemVaoGioHang(int id, int soLuong) {

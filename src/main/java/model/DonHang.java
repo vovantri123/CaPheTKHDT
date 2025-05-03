@@ -23,7 +23,7 @@ public class DonHang {
     private String sdtKhachHang;
     private String diaChiGiaoHang;
     private String phuongThucThanhToan;
-    private List<ChiTietDonHang> chiTietDonHangList;
+    private List<ChiTietDonHang> danhSachChiTietDonHang;
 
     public DonHang(String tenKhachHang, String sdtKhachHang, String diaChiGiaoHang,
                    String phuongThucThanhToan, List<ChiTietDonHang> chiTietItems) {
@@ -34,57 +34,40 @@ public class DonHang {
         this.sdtKhachHang = sdtKhachHang;
         this.diaChiGiaoHang = diaChiGiaoHang;
         this.phuongThucThanhToan = phuongThucThanhToan;
-        this.chiTietDonHangList = chiTietItems;
+        this.danhSachChiTietDonHang = chiTietItems;
     }
 
-//    public void xuLyDon() {
-//        Kho kho = new Kho();
-//        boolean ketQua = kho.kiemTraTonKho();
-//        ThongBao thongBao = new ThongBao();
-//        List<ChiTietDonHang> chiTietSP = new ArrayList<ChiTietDonHang>();
-//        if(ketQua == false) {
-//            capNhatTrangThaiDaHuy();
-//            thongBao.guiThongBao();
-//        } else {
-//            capNhatTrangThaiDangThucHien();
-//            for(ChiTietDonHang chiTiet : chiTietSP){
-//                chiTiet.khauTruKho();
-//            }
-//            thongBao.guiThongBao();
-//        }
-//    }
-
     public DonHang xuLyDon() {
-        System.out.println("Bắt đầu xử lý đơn cho ID: " + this.id);
         Kho kho = new Kho();
-        boolean ketQua = kho.kiemTraTonKho();
-        ThongBao thongBao = new ThongBao();
-        if (!ketQua) {
-            System.out.println("Không đủ hàng tồn kho cho đơn hàng ID: " + this.id + ". Đơn hàng sẽ bị hủy.");
-            thongBao.setNguoiNhan("Khách hàng");
-            thongBao.setNoiDung("Không đủ nguyên liệu. Đơn hàng đã hủy!");
 
+        boolean ketQua = kho.kiemTraTonKho();
+        if (!ketQua) {
             capNhatTrangThaiDaHuy();
         } else {
-            if(this.trangThai == DA_HOAN_THANH) {
-                System.out.println("Đã có nhân viên khác nhận đơn hàng ID: #" + this.id);
-            }
-            System.out.println("Thực hiện khấu trừ kho cho đơn hàng ID: " + this.id);
-            for (ChiTietDonHang chiTiet : this.chiTietDonHangList) {
-                chiTiet.khauTruKho();
-            }
-            this.trangThai = DA_HOAN_THANH;
-            thongBao.setNguoiNhan("Khách hàng");
-            thongBao.setNoiDung("Đơn hàng #" + this.id + " của bạn đang được thực hiện.");
-            thongBao.guiThongBao();
+            capNhatTrangThaiDaHoanThanh();
         }
         return this;
     }
     public void capNhatTrangThaiDaHuy() {
         setTrangThai(DA_HUY);
+
+        ThongBao thongBao = new ThongBao();
+        thongBao.setNguoiNhan("Khách hàng");
+        thongBao.setNoiDung("Không đủ nguyên liệu. Đơn hàng đã hủy!");
+        thongBao.guiThongBao();
     }
-    public void capNhatTrangThaiDangThucHien() {
-        setTrangThai(DANG_THUC_HIEN);
+    public void capNhatTrangThaiDaHoanThanh() {
+        setTrangThai(DA_HOAN_THANH);
+
+        System.out.println("Thực hiện khấu trừ kho cho đơn hàng ID: " + this.id);
+        for (ChiTietDonHang chiTiet : this.danhSachChiTietDonHang) {
+            chiTiet.khauTruKho();
+        }
+
+        ThongBao thongBao = new ThongBao();
+        thongBao.setNguoiNhan("Khách hàng");
+        thongBao.setNoiDung("Đơn hàng #" + this.id + " của bạn đã thực hiện.");
+        thongBao.guiThongBao();
     }
 
     public void danhGiaSanPham() {
@@ -112,7 +95,7 @@ public class DonHang {
     public String getSdtKhachHang() { return sdtKhachHang; } public void setSdtKhachHang(String sdtKhachHang) { this.sdtKhachHang = sdtKhachHang; }
     public String getDiaChiGiaoHang() { return diaChiGiaoHang; } public void setDiaChiGiaoHang(String diaChiGiaoHang) { this.diaChiGiaoHang = diaChiGiaoHang; }
     public String getPhuongThucThanhToan() { return phuongThucThanhToan; } public void setPhuongThucThanhToan(String phuongThucThanhToan) { this.phuongThucThanhToan = phuongThucThanhToan; }
-    public List<ChiTietDonHang> getChiTietDonHangList() { return chiTietDonHangList; } public void setChiTietDonHangList(List<ChiTietDonHang> chiTietDonHangList) { this.chiTietDonHangList = chiTietDonHangList; }
+    public List<ChiTietDonHang> getChiTietDonHangList() { return danhSachChiTietDonHang; } public void setChiTietDonHangList(List<ChiTietDonHang> chiTietDonHangList) { this.danhSachChiTietDonHang = chiTietDonHangList; }
 
     static {
         List<SanPham> spList = SanPham.getDanhSachSanPham();
