@@ -1,36 +1,29 @@
 package model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class Kho {
-    /**
-     * Default constructor
-     */
+    private int id;
+    private int soLuongTonKho;
     private static List<Kho> danhSachKho = new ArrayList<>();
-
+    public Kho() {
+    }
     public Kho(int id, int soLuongTonKho) {
         this.id = id;
         this.soLuongTonKho = soLuongTonKho;
     }
-    public Kho() {}
-    private int id;
-    private int soLuongTonKho;
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public int getSoLuongTonKho() { return soLuongTonKho; }
-    public void setSoLuongTonKho(int soLuongTonKho) { this.soLuongTonKho = soLuongTonKho; }
-
     public boolean kiemTraTonKho() {
         return true;
-    }
-    public void capNhatKho(int id, int soLuong) {
-        // TODO implement here
     }
     public void themKho(int id, int soLuong) {
         danhSachKho.add(new Kho(id, soLuong));
     }
-
     public static int timSoLuongTonKho(int id) {
         return danhSachKho.stream()
                 .filter(kho -> kho.getId() == id)
@@ -38,7 +31,6 @@ public class Kho {
                 .findFirst()
                 .orElse(0);
     }
-
 
     static {
         danhSachKho.add(new Kho(1, 100));
@@ -59,5 +51,13 @@ public class Kho {
         danhSachKho.add(new Kho(16, 100));
         danhSachKho.add(new Kho(17, 100));
         danhSachKho.add(new Kho(18, 100));
+    }
+
+    public static List<Kho> getDanhSachKho() {
+        return danhSachKho;
+    }
+
+    public static void setDanhSachKho(List<Kho> danhSachKho) {
+        Kho.danhSachKho = danhSachKho;
     }
 }

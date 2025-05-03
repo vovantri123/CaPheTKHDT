@@ -8,40 +8,20 @@
 <jsp:include page="header.jsp"/>
 
 <%
-    // Lấy thông báo từ URL (nếu có)
-    String message = request.getParameter("message");
-    String messageType = ""; // "success" hoặc "error"
-    if (message != null) {
-        message = URLDecoder.decode(message, "UTF-8");
-        if (request.getParameter("success") != null) {
-            messageType = "success";
-        } else if (request.getParameter("error") != null) {
-            messageType = "error";
-        }
-    }
-
-    // Xử lý đánh giá nếu form được submit
     if (request.getMethod().equalsIgnoreCase("POST")) {
-        String orderId = request.getParameter("orderId");
+        String orderIdStr = request.getParameter("orderId");
         String soSaoStr = request.getParameter("soSao");
         String binhLuan = request.getParameter("binhLuan");
 
-        if (orderId != null && soSaoStr != null && binhLuan != null) {
-            int soSao = Integer.parseInt(soSaoStr);
-            DanhGia danhGia = new DanhGia(soSao, binhLuan, LocalDateTime.now());
+        int orderId = Integer.parseInt(orderIdStr);
+        int soSao = Integer.parseInt(soSaoStr);
 
-            if (danhGia.kiemTraKetQua()) {
-                // Giả sử lưu đánh giá thành công
-                message = "Đơn hàng #" + orderId + " đã đánh giá thành công!";
-                messageType = "success";
-            } else {
-                message = "Đánh giá không hợp lệ!";
-                messageType = "error";
-            }
-        } else {
-            message = "Dữ liệu đánh giá không đầy đủ!";
-            messageType = "error";
-        }
+        DanhGia danhGia = new DanhGia(soSao, binhLuan.trim(), LocalDateTime.now());
+        DonHang donHang = new DonHang();
+
+        String thongBao =  donHang.danhGiaDonHang(orderId, danhGia);
+        System.out.println("Thong bao: "+ thongBao);
+
     }
 
     // Lấy *tất cả* đơn hàng, sắp xếp theo ngày tạo mới nhất lên đầu (trong hàm getDanhSachDonHang đã sort)
@@ -188,13 +168,6 @@
 
 <h1>Danh Sách Tất Cả Đơn Hàng (<%= tatCaDonHang.size() %>)</h1>
 
-<%-- Hiển thị thông báo (nếu có) --%>
-<% if (message != null) { %>
-<div class="message <%= messageType %>">
-    <%= message %>
-</div>
-<% } %>
-
 <%-- Bảng hiển thị tất cả đơn hàng --%>
 <% if (tatCaDonHang.isEmpty()) { %>
 <p class="no-orders">Không có đơn hàng nào trong hệ thống.</p>
@@ -224,7 +197,7 @@
         </td>
         <td class="col-details order-details">
             <ul>
-                <% for (ChiTietDonHang ct : dh.getChiTietDonHangList()) { %>
+                <% for (ChiTietDonHang ct : dh.getDanhSachChiTietDonHang()) { %>
                 <li><%= ct.toString() %></li>
                 <% } %>
             </ul>

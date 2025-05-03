@@ -1,18 +1,24 @@
 package model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@Getter
+@Setter
 public class SanPham {
-	
+	private int id;
+	private String ten;
+	private String moTa;
+	private float gia;
+	private String hinhAnh;
 	private static List<SanPham> danhSachSanPham = new ArrayList<>();
 	private List<SanPham> ketQuaTimKiem = new ArrayList<>();
-	 
     public SanPham() {
     }
-    
     public SanPham(int id, String ten, String hinhAnh, float gia, String moTa) {
         this.id = id;
         this.ten = ten;
@@ -20,12 +26,6 @@ public class SanPham {
         this.gia = gia;
         this.moTa = moTa;
     }
-    
-    private int id;
-    private String ten;
-    private String moTa;
-    private float gia;
-    private String hinhAnh;
     public String capNhatSanPham() {
 		LoaiSanPham loaiSanPham = new LoaiSanPham();
 		boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
@@ -54,7 +54,6 @@ public class SanPham {
     		    + "<td>" + sanPham.getTen() + "</td>"
     		    + "<td>" + sanPham.getGia() + " VND</td>"
     		    + "</tr>";
-        
     }
     public String themSanPham(int soLuong) {
         LoaiSanPham loaiSanPham = new LoaiSanPham();
@@ -67,71 +66,15 @@ public class SanPham {
         }
 		return "Lỗi khi thêm sản phẩm!";
     }
-
     public SanPham luuSanPham() {
         SanPham newSanPham = new SanPham(danhSachSanPham.get(danhSachSanPham.size() - 1).getId() + 1, ten, hinhAnh, gia, moTa);
         danhSachSanPham.add(newSanPham);
         System.out.println("Đã thêm SP: " + newSanPham);
         return newSanPham;
-    }    
-
-
-
-
+    }
 	public String layTenSanPham() { // Hàm này giống getter bên dưới
 		return ten;
-	} // Getter 2 (đổi tên cho khớp SD thôi)
-	public String getTen() {
-		return ten;
 	}
-
-	public void setTen(String ten) {
-		this.ten = ten;
-	}
-
-    public int getId() {
-        return id;
-    } 
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-	public float getGia() {
-		return gia;
-	}
-	public void setGia(float gia) {
-		this.gia = gia;
-	}
-
-	public String getMoTa() {
-		return moTa;
-	}
-	public void setMoTa(String moTa) {
-		this.moTa = moTa;
-	}
-	public String getHinhAnh() {
-		return hinhAnh;
-	}
-	public void setHinhAnh(String hinhAnh) {
-		this.hinhAnh = hinhAnh;
-	}
-	
-	public static List<SanPham> getDanhSachSanPham() {
-		return danhSachSanPham;
-	}
-	public static void setDanhSachSanPham(List<SanPham> danhSachSanPham) {
-		SanPham.danhSachSanPham = danhSachSanPham;
-	}
-
-	public List<SanPham> getKetQuaTimKiem() {
-		return ketQuaTimKiem;
-	}
-
-	public void setKetQuaTimKiem(List<SanPham> ketQuaTimKiem) {
-		this.ketQuaTimKiem = ketQuaTimKiem;
-	}
-
 	public String timKiemSanPham(String tuKhoa) {
 		String tenSanPham = "";
 
@@ -143,11 +86,9 @@ public class SanPham {
 	    }
 		return "HienThiSanPhamThanhCong";
 	}
-
 	public void themDanhSachSanPham(SanPham sanPham) {
 		ketQuaTimKiem.add(sanPham);
 	}
-	
 	public void laySanPhamDeThemVaoGioHang(int id, int soLuong) {
 		Kho kho = new Kho();
 		GioHang gioHang = new GioHang();
@@ -161,7 +102,6 @@ public class SanPham {
 		    }
 		}
 	}
-
 	public SanPham laySanPhamTheoId(int id) { // sử dụng Stream API của Java
 		return danhSachSanPham.stream()
 				.filter(sp -> sp.getId() == id)
@@ -189,5 +129,21 @@ public class SanPham {
 	    danhSachSanPham.add(new SanPham(16, "Cà phê Nitro Cold Brew", "https://www.shutterstock.com/image-vector/coming-soon-speechbubble-advertising-megaphone-600nw-2511768889.jpg", 95000f, "Cà phê Nitro Cold Brew là cà phê lạnh được chiết xuất từ cà phê xay nhuyễn, kết hợp với khí nitơ tạo ra một lớp bọt mịn màng, mang đến hương vị mượt mà và tinh tế."));
 	    danhSachSanPham.add(new SanPham(17, "Cà phê Macchiato", "https://www.shutterstock.com/image-vector/coming-soon-speechbubble-advertising-megaphone-600nw-2511768889.jpg", 65000f, "Cà phê Macchiato là sự kết hợp giữa cà phê Espresso đậm đặc và một lớp bọt sữa nhẹ, mang đến hương vị đậm đà nhưng không quá mạnh mẽ."));
 	    danhSachSanPham.add(new SanPham(18, "Cà phê Flat White", "https://www.shutterstock.com/image-vector/coming-soon-speechbubble-advertising-megaphone-600nw-2511768889.jpg", 70000f, "Cà phê Flat White là sự kết hợp giữa cà phê Espresso và sữa hơi nở, mang đến một hương vị mượt mà, cân bằng giữa cà phê và sữa."));
+	}
+
+	public static List<SanPham> getDanhSachSanPham() {
+		return danhSachSanPham;
+	}
+
+	public static void setDanhSachSanPham(List<SanPham> danhSachSanPham) {
+		SanPham.danhSachSanPham = danhSachSanPham;
+	}
+
+	public List<SanPham> getKetQuaTimKiem() {
+		return ketQuaTimKiem;
+	}
+
+	public void setKetQuaTimKiem(List<SanPham> ketQuaTimKiem) {
+		this.ketQuaTimKiem = ketQuaTimKiem;
 	}
 }

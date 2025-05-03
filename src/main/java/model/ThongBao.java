@@ -1,42 +1,19 @@
 package model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class ThongBao {
-    /**
-     * Default constructor
-     */
+    private int id;
+    private String nguoiNhan;
+    private String noiDung;
     public ThongBao() {
     }
-
-    private int id;
-    private String noiDung;
     public void guiThongBao() {
         System.out.println("Thông báo gửi đến " + nguoiNhan + ": " + noiDung);
     }
-    public String getNguoiNhan() {
-        return nguoiNhan;
-    }
-
-    public void setNguoiNhan(String nguoiNhan) {
-        this.nguoiNhan = nguoiNhan;
-    }
-
-    public String getNoiDung() {
-        return noiDung;
-    }
-
-    public void setNoiDung(String noiDung) {
-        this.noiDung = noiDung;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    private String nguoiNhan;
 }
