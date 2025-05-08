@@ -19,4 +19,9 @@ public class ChiTietDonHang {
     public void khauTruKho() {
         System.out.println("Khấu trừ " + soLuong + " sản phẩm (ID: " + sanPhamId + ")");
     }
+
+    @Override
+    public String toString() {
+        return "(ID: " + sanPhamId + ", số lượng: " + soLuong + ") - " + String.format("%.0f", thanhTien) + "đ";
+    }
 }
