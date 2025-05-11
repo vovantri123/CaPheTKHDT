@@ -37,15 +37,16 @@ public class DonHang {
         this.danhSachChiTietDonHang = danhSachChiTietDonHang;
     }
 
-    public DonHang xuLyDon() {
+    public String xuLyDon() {
         Kho kho = new Kho();
         boolean ketQua = kho.kiemTraTonKho();
         if (!ketQua) {
             capNhatTrangThaiDaHuy();
+            return "Đơn hàng đã bị hủy vì không đủ nguyên liệu";
         } else {
             capNhatTrangThaiDaHoanThanh();
+            return "Đơn hàng đã được xử lý thành công";
         }
-        return this;
     }
     public void capNhatTrangThaiDaHuy() {
         setTrangThai(DA_HUY);
@@ -75,7 +76,10 @@ public class DonHang {
         boolean ketQua = danhGia.kiemTraDanhGia();
         if(ketQua == true) {
             luuDanhGiaVaoDonHang();
-            return danhGia.getSoSao() + " sao\nBinh luan: " + danhGia.getBinhLuan();
+            thongBao.setNoiDung(danhGia.getSoSao() + " sao\nBinh luan: " + danhGia.getBinhLuan());
+            thongBao.setNguoiNhan("Khách hàng");
+            thongBao.guiThongBao();
+            return "Đánh giá của bạn đã đưuọc gửi thành công";
         }
         return "Don hang #" + idDonHang + " danh gia that bai";
     }

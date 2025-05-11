@@ -17,8 +17,7 @@
     DonHang donHang = donHangOpt.get();
 
     if ("nhan_don".equals(action)) {
-        DonHang dh = donHang.xuLyDon();
-        System.out.println("Đơn hàng ID " + dh.getId() + " đã xử lý");
+        System.out.println("Đơn hàng ID " + donHang.xuLyDon());
     }
     else if ("huy_don_nv".equals(action)) {
         donHang.capNhatTrangThaiDaHuy();

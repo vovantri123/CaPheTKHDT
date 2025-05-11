@@ -31,7 +31,7 @@ public class SanPham {
 		boolean ketQua = loaiSanPham.kiemTraLoaiSanPham();
 		if(ketQua == true) {
 			luuThongTinSanPham();
-			return "Cập nhật sản phẩm thành công!";
+			return "Thông báo thành công";
 		}
 		return "Lỗi khi cập nhật sản phẩm!";
     }
@@ -102,7 +102,7 @@ public class SanPham {
 		    }
 		}
 	}
-	public SanPham laySanPhamTheoId(int id) { // sử dụng Stream API của Java
+	public SanPham laySanPhamTheoId(int id) {
 		return danhSachSanPham.stream()
 				.filter(sp -> sp.getId() == id)
 				.findFirst()

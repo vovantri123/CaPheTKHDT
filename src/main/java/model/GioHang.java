@@ -30,7 +30,7 @@ public class GioHang {
     public String themSanPhamVaoGioHang() {
     	SanPham sanPham = new SanPham();
 		sanPham.laySanPhamDeThemVaoGioHang(id, soLuong);
-		return "ThemSanPhamThanhCong";
+		return "Thêm sản phẩm vào giỏ hàng thành công";
     }
     public void luuSanPhamVaoGioHang(SanPham sanPham, int soLuong) {
     	danhSachSanPhamTrongGioHang.addAll(Collections.nCopies(soLuong, sanPham)); 
